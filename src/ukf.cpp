@@ -99,13 +99,13 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
       double phi = meas_package.raw_measurements_[1];
       double rho_dot = meas_package.raw_measurements_[2];
 
-      x_ << rho * cos(phi), rho * sin(phi), rho_dot, rho, rho_dot;
+      x_ << rho * cos(phi), rho * sin(phi), rho_dot, 0, 0;
 
       P_ << std_radr_ * std_radr_, 0, 0, 0, 0,
             0, std_radr_ * std_radr_, 0, 0, 0,
             0, 0, std_radrd_ * std_radrd_, 0, 0,
-            0, 0, 0, std_radphi_ * std_radphi_, 0, 0,
-            0, 0, 0, 0, std_radphi_ * std_radphi_;
+            0, 0, 0, 1, 0,
+            0, 0, 0, 0, 1;
     }
 
     time_us_ = meas_package.timestamp_;
